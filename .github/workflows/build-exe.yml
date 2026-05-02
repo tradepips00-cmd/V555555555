@@ -1,0 +1,29 @@
+name: Build Panel Loop V5 Pro Real EXE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyInstaller
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: Build EXE
+        run: python -m PyInstaller --onefile --windowed --name PanelLoopV5ProReal Panel_Loop_V5_ProReal.py
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: PanelLoopV5ProReal-Windows-EXE
+          path: dist/PanelLoopV5ProReal.exe
